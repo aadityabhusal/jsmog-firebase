@@ -4,7 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JSMOG</title>
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <style>
+    #canvas{
+      cursor: pointer !important;
+    }
+  </style>
 </head>
 <body>
   <!-- <div id="login-container">
@@ -17,7 +21,7 @@
   <div id="canvas-container">
     <canvas id="canvas" width="600px" height="600px"></canvas>
   </div>
-  <button id="btn">Move</button>
+  <button id="btn">Roll the Dice</button>
   <div id="val"></div>
   <!-- <div id="grid-container">
     <div id="path">
@@ -25,6 +29,7 @@
     </div> -->
   </div>
 </body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
 

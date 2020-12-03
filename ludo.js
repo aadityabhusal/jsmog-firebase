@@ -1,20 +1,15 @@
+import { paintTheBoard } from "./paintTheBoard.js";
+import { moveItem, paintItem, clickItem } from "./Item.js";
+
 const fb = firebase.database();
 let roomsRef = fb.ref("ludo/pX3jY2");
-import { paintTheBoard } from "./paintTheBoard.js";
-let context = document.getElementById("canvas").getContext("2d");
-import { Item } from "./Item.js";
-import { path } from "./path.js";
+const canvas = document.getElementById("canvas");
+const context = canvas.getContext("2d");
+import { initialPlayers } from "./players.js";
+roomsRef.child("players").set(initialPlayers);
 
 let players;
-const tileSize = 40;
-const colors = {
-  blue: "#3498db",
-  red: "#e74c3c",
-  green: "#2ecc71",
-  yellow: "#f1c40f",
-};
 let itemsPieces = [];
-
 let currentScore = null;
 
 document.getElementById("btn").addEventListener("click", function () {
@@ -24,17 +19,15 @@ document.getElementById("btn").addEventListener("click", function () {
 });
 
 function initGame() {
-  paintTheBoard(context, tileSize, colors);
+  paintTheBoard(context);
 
   roomsRef.once("value", (snapshot) => {
-    let initPlayers = snapshot.val().players;
-    players = initPlayers;
+    players = snapshot.val().players;
   });
 
   roomsRef.on("value", (snapshot) => {
-    let updatePlayers = snapshot.val().players;
-    players = updatePlayers;
-    paintTheBoard(context, tileSize, colors);
+    players = snapshot.val().players;
+    paintTheBoard(context);
     itemsPieces = [];
 
     for (const playerKey in players) {
@@ -44,21 +37,7 @@ function initGame() {
         for (const itemKey in items) {
           if (items.hasOwnProperty(itemKey)) {
             let item = items[itemKey];
-            context.beginPath();
-            context.fillStyle = colors[playerKey];
-
-            let x = item.x * tileSize + 20;
-            let y = item.y * tileSize + 20;
-            context.arc(x, y, 16, 0, 2 * Math.PI);
-            context.fill();
-
-            let finalItem = new Item({
-              x,
-              y,
-              status: item.status,
-              player: playerKey,
-              item: itemKey,
-            });
+            let finalItem = paintItem(context, playerKey, item, itemKey);
             itemsPieces.push(finalItem);
           }
         }
@@ -66,31 +45,28 @@ function initGame() {
     }
   });
 }
-document.getElementById("canvas").addEventListener("click", function (event) {
+
+canvas.addEventListener("click", function (event) {
   if (!currentScore) return;
   let rect = context.canvas.getBoundingClientRect();
+  let x = rect.top + event.clientX;
+  let y = rect.left + event.clientY;
 
-  let x = rect.top + event.pageX;
-  let y = rect.left + event.pageY;
-
-  itemsPieces.forEach((e) => {
-    if (y > e.y && y < e.y + tileSize && x > e.x && x < e.x + tileSize) {
-      if (e.status == 1) {
-        let item = path.findIndex(
-          (item) =>
-            item[0] == (e.x - 20) / tileSize && item[1] == (e.y - 20) / tileSize
-        );
-
-        let val = item + currentScore;
-        e.x = path[val][0];
-        e.y = path[val][1];
+  itemsPieces.forEach((element) => {
+    if (clickItem(x, y, element)) {
+      let finalElement = moveItem(element, currentScore);
+      if (finalElement) {
         roomsRef
           .child("players")
-          .child(e.player)
+          .child(finalElement.player)
           .child("items")
-          .child(e.item)
-          .update({ x: e.x, y: e.y });
-        currentScore = null;
+          .child(finalElement.item)
+          .update({
+            x: finalElement.x,
+            y: finalElement.y,
+            status: finalElement.status,
+            steps: finalElement.steps,
+          });
       }
     }
   });
