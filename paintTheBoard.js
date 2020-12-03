@@ -11,14 +11,6 @@ export const paintTheBoard = (context) => {
   context.strokeRect(0, 0, width, height);
   context.lineWidth = 2;
 
-  // for (let i = 0; i < 15; i++) {
-  //   for (let j = 0; j < 15; j++) {
-  //     context.strokeStyle = "#dddddd";
-  //     context.strokeRect(i * tileSize, j * tileSize, tileSize, tileSize);
-  //     context.strokeText(i + "," + j, i * tileSize + 10, j * tileSize + 10);
-  //   }
-  // }
-
   for (const tile of path) {
     context.strokeRect(
       tile[0] * tileSize,
@@ -35,6 +27,9 @@ export const paintTheBoard = (context) => {
     let star = new Image();
     star.src = "assets/star.png";
     context.drawImage(star, x + 5, y + 5, tileSize - 10, tileSize - 10);
+
+    context.strokeStyle = colors[color];
+    context.strokeRect(x, y, tileSize, tileSize);
   }
 
   paintInnerPath(context, "blue");

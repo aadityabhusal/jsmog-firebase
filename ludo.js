@@ -5,8 +5,9 @@ const fb = firebase.database();
 let roomsRef = fb.ref("ludo/pX3jY2");
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
-import { initialPlayers } from "./players.js";
-roomsRef.child("players").set(initialPlayers);
+
+// import { initialPlayers } from "./players.js";
+// roomsRef.child("players").set(initialPlayers);
 
 let players;
 let itemsPieces = [];
