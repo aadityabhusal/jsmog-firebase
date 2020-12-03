@@ -1,4 +1,11 @@
-import { path, innerPaths, stars, colors, tileSize } from "./constants.js";
+import {
+  path,
+  innerPaths,
+  stars,
+  colors,
+  tileSize,
+  startingPoints,
+} from "./constants.js";
 
 export const paintTheBoard = (context) => {
   let height = context.canvas.height;
@@ -28,8 +35,17 @@ export const paintTheBoard = (context) => {
     star.src = "assets/star.png";
     context.drawImage(star, x + 5, y + 5, tileSize - 10, tileSize - 10);
 
-    context.strokeStyle = colors[color];
-    context.strokeRect(x, y, tileSize, tileSize);
+    for (const key in startingPoints) {
+      if (startingPoints.hasOwnProperty(key)) {
+        if (
+          startingPoints[key][0] == tile[0] &&
+          startingPoints[key][1] == tile[1]
+        ) {
+          context.strokeStyle = colors[key];
+          context.strokeRect(x, y, tileSize, tileSize);
+        }
+      }
+    }
   }
 
   paintInnerPath(context, "blue");

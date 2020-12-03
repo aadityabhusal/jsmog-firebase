@@ -111,21 +111,21 @@ export const stars = [
 export const startingPoints = {
   blue: [6, 13],
   red: [1, 6],
-  greem: [8, 1],
+  green: [8, 1],
   yellow: [13, 8],
 };
 
 // export const pathEndPoints = {
 //   blue: [7, 14],
 //   red: [0, 7],
-//   greem: [7, 0],
+//   green: [7, 0],
 //   yellow: [14, 7],
 // };
 
 export const gameEndPoints = {
   blue: [7, 9],
   red: [5, 7],
-  greem: [7, 5],
+  green: [7, 5],
   yellow: [9, 7],
 };
 
