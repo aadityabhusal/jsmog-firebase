@@ -1,8 +1,13 @@
 import { paintTheBoard } from "./paintTheBoard.js";
 import { moveItem, paintItem, clickItem } from "./Item.js";
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+let roomId = urlParams.get("room");
+
 const fb = firebase.database();
-let roomsRef = fb.ref("ludo/pX3jY2");
+let roomsRef = fb.ref(`ludo/${roomId}`);
+
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 
@@ -21,11 +26,7 @@ document.getElementById("btn").addEventListener("click", function () {
 
 function initGame() {
   paintTheBoard(context);
-
-  roomsRef.once("value", (snapshot) => {
-    players = snapshot.val().players;
-  });
-
+  console.log(players);
   roomsRef.on("value", (snapshot) => {
     players = snapshot.val().players;
     paintTheBoard(context);
@@ -72,5 +73,17 @@ canvas.addEventListener("click", function (event) {
     }
   });
 });
-
-window.addEventListener("load", initGame);
+if (roomId) {
+  roomsRef.once("value", (snapshot) => {
+    if (snapshot.val()) {
+      players = snapshot.val().players;
+      initGame();
+    } else {
+      document.getElementById(
+        "message"
+      ).innerHTML = `<p>Room not found</p><a href="${window.location.origin}"> Go to home</a>`;
+    }
+  });
+}
+// console.log(window.location);
+// window.addEventListener("load", initGame);

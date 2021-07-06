@@ -1,59 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSMOG</title>
-  <style>
-    #canvas{
-      cursor: pointer !important;
-    }
-  </style>
-</head>
-<body>
-  <!-- <div id="login-container">
-    <form>
-      <input type="email" placeholder="Enter your email" />
-      <input type="password" placeholder="Enter your password" />
-      <button></button>
-    </form>
-  </div> -->
-  <div id="canvas-container">
-    <canvas id="canvas" width="600px" height="600px"></canvas>
-  </div>
-  <button id="btn">Roll the Dice</button>
-  <div id="val"></div>
-  <!-- <div id="grid-container">
-    <div id="path">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSMOG</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="message"></div>
+    <div id="home-container" hidden>
+      <h3>Enter a room id</h3>
+      <form method="GET">
+        <input type="text" name="room" placeholder="Enter a room id" />
+        <button>Join</button>
+      </form>
+    </div>
+    <div id="authform-container" hidden>
+      <div id="tabs">
+        <div id="login-display" class="active">Login</div>
+        <div id="signup-display">Signup</div>
+      </div>
+      <div id="authform">
+        <form id="login-container">
+          <input type="email" name="email" placeholder="Enter your email" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+          />
+          <button id="login-button">Login</button>
+        </form>
+        <form id="signup-container">
+          <input type="text" name="name" placeholder="Enter your name" />
+          <input type="email" name="email" placeholder="Enter your email" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+          />
+          <button id="signup-button">Signup</button>
+        </form>
+      </div>
+    </div>
+    <div id="game-container" hidden>
+      <div id="canvas-container">
+        <canvas id="canvas" width="600px" height="600px"></canvas>
+        <button id="btn">Roll the Dice</button>
+        <div id="val"></div>
+      </div>
+    </div>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
 
-    </div> -->
-  </div>
-</body>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-database.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
+  <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-analytics.js"></script>
 
-<script>
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyBB402KAQrfqu8h3q0IgTw0Mo6olnbx_BU",
-    authDomain: "jsmog-fb.firebaseapp.com",
-    databaseURL: "https://jsmog-fb.firebaseio.com",
-    projectId: "jsmog-fb",
-    storageBucket: "jsmog-fb.appspot.com",
-    messagingSenderId: "568375462054",
-    appId: "1:568375462054:web:494f8b3b7cb67462424c67",
-    measurementId: "G-CRFKJ823C1"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
-<!-- <script src="app.js"></script> -->
-<script src="ludo.js" type="module"></script>
+  <script>
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyBB402KAQrfqu8h3q0IgTw0Mo6olnbx_BU",
+      authDomain: "jsmog-fb.firebaseapp.com",
+      databaseURL: "https://jsmog-fb.firebaseio.com",
+      projectId: "jsmog-fb",
+      storageBucket: "jsmog-fb.appspot.com",
+      messagingSenderId: "568375462054",
+      appId: "1:568375462054:web:494f8b3b7cb67462424c67",
+      measurementId: "G-CRFKJ823C1",
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+  <!-- <script src="app.js"></script> -->
+  <script src="auth.js" type="module"></script>
+  <script src="ludo.js" type="module"></script>
 </html>

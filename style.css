@@ -1,0 +1,64 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#canvas {
+  cursor: pointer !important;
+}
+
+#home-container {
+  text-align: center;
+}
+
+#tabs {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+#tabs > div {
+  padding: 5px 20px;
+  cursor: pointer;
+}
+#tabs > .active {
+  border-bottom: 2px solid #3498db;
+}
+
+form button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+#authform-container {
+  width: 400px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+#authform {
+  transition: 0.3s ease-in-out transform;
+  display: flex;
+}
+
+form {
+  text-align: center;
+  margin-left: 50px;
+}
+
+form input,
+form button {
+  width: 300px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  border: 1px solid #bdc3c7;
+  margin-top: 15px;
+}
+
+#message {
+  font-size: 24px;
+  text-align: center;
+  margin: 20px 0;
+}

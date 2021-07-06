@@ -88,6 +88,7 @@ export function clickItem(x, y, element) {
     x > element.x &&
     x < element.x + tileSize
   ) {
+    console.log(element);
     return true;
   }
   return false;
